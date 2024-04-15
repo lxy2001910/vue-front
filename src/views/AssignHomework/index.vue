@@ -93,17 +93,15 @@
         </el-form-item>
 
         <el-form-item>
-          <el-button :loading="uploading" style="width: 100%" type="primary" @click="submitHomework"
+          <el-button
+            :loading="uploading"
+            style="width: 100%"
+            type="primary"
+            @click="submitHomework"
             >发布</el-button
           >
         </el-form-item>
       </el-form>
-    </div>
-
-    <div class="historyHomework">
-      <span v-for="(item, index) in filterClass" :key="index">{{
-        item.className
-      }}</span>
     </div>
   </div>
 </template>
@@ -111,8 +109,7 @@
 <script setup>
 import { useUserStore } from '@/store/user'
 import { findClassesCourseByUserId, createHomework } from '@/api/teacher'
-import {toast} from '@/utils/message'
-
+import { toast } from '@/utils/message'
 
 const { user } = useUserStore()
 
@@ -142,19 +139,21 @@ const handleCheckAll = (val) => {
 
 const homeworkRules = {
   title: [{ required: true, message: '请输入作业标题', trigger: 'submit' }],
-  description: [{ required: true, message: '请输入作业描述', trigger: 'submit' }],
+  description: [
+    { required: true, message: '请输入作业描述', trigger: 'submit' },
+  ],
   dueDate: [{ required: true, message: '请选择截止日期', trigger: 'submit' }],
   teacherId: [{ required: true, message: '请输入教师ID', trigger: 'submit' }],
 }
 const handleFileChange = (file, fileList) => {
   // 假设你只关心最新的一个文件，因为你设置了 :limit="1"
   // fileList 是当前的文件列表，它应该包含了最新上传的文件
-  const latestFile = fileList[fileList.length - 1];
+  const latestFile = fileList[fileList.length - 1]
   if (latestFile) {
     // 直接保存 File 对象
-    upfile.value = latestFile.raw || latestFile; // 兼容性写法，确保是 File 对象
+    upfile.value = latestFile.raw || latestFile // 兼容性写法，确保是 File 对象
   }
-};
+}
 
 const handleRemove = (file, fileList) => {
   upfile.value = null
@@ -167,43 +166,39 @@ const handleExceed = (files) => {
 }
 
 const submitHomework = async () => {
-  uploading.value = true;
+  uploading.value = true
 
   try {
-    const valid = await homeworkRef.value.validate();
-    if (!valid) return;
+    const valid = await homeworkRef.value.validate()
+    if (!valid) return
 
     const homeworkClassBO = {
       homeworks: { ...homeworkForm },
       classId: classId.value ? classId.value : [],
-    };
-    
-    let formData = new FormData();
-    if (upfile.value) formData.append('file', upfile.value);
-    formData.append('homework', JSON.stringify(homeworkClassBO));
+    }
+
+    let formData = new FormData()
+    if (upfile.value) formData.append('file', upfile.value)
+    formData.append('homework', JSON.stringify(homeworkClassBO))
 
     // 发送 formData 到服务器
-    const res = await createHomework(formData);
-    
+    const res = await createHomework(formData)
+
     if (res.code == 200) {
-      homeworkRef.value.resetFields();
-      fileRef.value.clearFiles();
-      classId.value = [];
-      toast(res.msg, '发布成功');
+      homeworkRef.value.resetFields()
+      fileRef.value.clearFiles()
+      classId.value = []
+      toast(res.msg, '发布成功')
     } else {
-      toast(res.msg, '发布失败','error');
+      toast(res.msg, '发布失败', 'error')
     }
   } catch (error) {
-   
     // toast('error', '发布失败');
-    toast('error','请输入完整','error')
+    toast('error', '请输入完整', 'error')
   } finally {
-    uploading.value = false;
+    uploading.value = false
   }
-};
-
-
-
+}
 
 let classesCourse = ref([])
 const filterClass = computed(() =>
@@ -226,24 +221,23 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item__content {
-  width: 1000px;
-}
+// .el-form-item__content {
+//   width: 1000px;
+// }
 .container {
   display: flex;
   justify-content: space-around;
-  // align-items: flex-start;
-  background-color: #f0f0f0;
-  padding: 20px;
+  background-color: rgba(111, 107, 113,0.3);
+  border-radius: 8px;
+  padding: 40px;
   height: 100vh;
 
-  .createHomework,
-  .historyHomework {
+  .createHomework {
     background-color: #ffffff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 20px;
-    width: 45%;
+    width: 100%;
     margin-top: 20px;
 
     display: flex;
