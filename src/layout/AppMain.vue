@@ -32,6 +32,8 @@ import TagsView from './components/TagsView.vue';
     overflow-x: hidden;
     padding: 20px;
     width: 100%;
+    // flex-grow: 1;
+    height: 100%;
   
   }
 }

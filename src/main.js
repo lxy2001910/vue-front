@@ -10,8 +10,6 @@ import pinia from './store'
 import 'animate.css'
 import i18n from './utils/i18n'
 
-
-
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 
