@@ -1,27 +1,23 @@
 /*
- * @Author: lxy 2500798479@qq.com
- * @Date: 2023-12-30 19:04:10
- * @LastEditors: lxy 2500798479@qq.com
- * @LastEditTime: 2024-04-02 00:29:16
+ * @Author: 星忆 2500798479@qq.com
+ * @Date: 2024-04-14 01:19:30
+ * @LastEditors: 星忆 2500798479@qq.com
+ * @LastEditTime: 2024-04-19 15:22:19
  * @FilePath: \up-cloud-front\vite.config.js
- * @Description:
- *
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved.
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-
+import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import { codeInspectorPlugin } from 'code-inspector-plugin'
 
-import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
   base: './',
-
   plugins: [
     vue(),
     AutoImport({
@@ -31,9 +27,10 @@ export default defineConfig({
     Components({
       resolvers: [ElementPlusResolver()],
     }),
-    codeInspectorPlugin({
-      bundler: 'vite',
-    }),
+    // codeInspectorPlugin({
+    //   bundler: 'vite',
+    // }),
+
   ],
   resolve: {
     alias: {

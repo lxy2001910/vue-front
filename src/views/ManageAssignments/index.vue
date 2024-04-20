@@ -2,7 +2,7 @@
  * @Author: 星忆 2500798479@qq.com
  * @Date: 2024-04-14 01:19:30
  * @LastEditors: 星忆 2500798479@qq.com
- * @LastEditTime: 2024-04-16 01:19:50
+ * @LastEditTime: 2024-04-16 21:50:28
  * @FilePath: \up-cloud-front\src\views\ManageAssignments\index.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -16,17 +16,33 @@
         @click="selectItem(index)"
       >
         <div class="homeleft">
-          <span class="title">{{ item.title }}</span>
+          <!-- <span class="title">{{ item.title.substring(0,15)+'...' }}</span> -->
+
+          <template v-if="isLongText(item.title)">
+            <el-popover
+              placement="right"
+              :width="200"
+              trigger="hover"
+              :content="item.title"
+            >
+              <template #reference>
+                <span class="title">{{
+                  item.title.substring(0, 8) + '...'
+                }}</span>
+              </template>
+            </el-popover>
+          </template>
+          <span v-else class="title">{{ item.title }}</span>
           <template v-if="isLongText(item.description)">
             <el-popover
               placement="right"
               :width="200"
-              trigger="click"
+              trigger="hover"
               :content="item.description"
             >
               <template #reference>
                 <span class="description">{{
-                  item.description.substring(0, 30) + '...'
+                  item.description.substring(0, 15) + '...'
                 }}</span>
               </template>
             </el-popover>
@@ -182,7 +198,7 @@ onMounted(async () => {
           display: block;
           width: 100%;
           overflow: hidden;
-          text-overflow: ellipsis;
+          //text-overflow: ellipsis;
           white-space: nowrap;
         }
         .title {
